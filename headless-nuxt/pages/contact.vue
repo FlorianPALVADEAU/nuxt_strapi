@@ -1,7 +1,7 @@
 <template>
-    <div className="Contact" data-barba="container" data-barba-namespace="wipe">
-      <div className="contact_content">
-        <h2 className='h2Contact'>Contact Me.</h2>
+    <div class="Contact" data-barba="container" data-barba-namespace="wipe">
+      <div class="contact_content">
+        <h2 class='h2Contact'>Contact Me.</h2>
         <form id="formContact">
           <label>Name</label>
           <input type="text" name="user_name" placeholder='Frédéric Mousseau'/>
@@ -12,7 +12,7 @@
           <input type="hidden" name="from_name" value='Florian'/>
           <input type="submit" value="Send" />
         </form>
-        <div id="moreInfoContact" className="adress">
+        <div id="moreInfoContact" class="adress">
             <h2>GET IN TOUCH.</h2>
             <p>ADDRESS</p>
             <p>Florian Palvadeau</p>

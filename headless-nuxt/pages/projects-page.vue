@@ -28,58 +28,58 @@
 </template>
   
 <script setup>
-const { find } = useStrapi()
-const projets = ref()
-const types = ref([])
-const technologies = ref([])
-const activeFilter = ref("all")
+    const { find } = useStrapi()
+    const projets = ref()
+    const types = ref([])
+    const technologies = ref([])
+    const activeFilter = ref("all")
 
-const filteredProjects = computed(() => {
-    if (activeFilter.value === "all") {
-        return projets.value.data
-    } else {
-        var test = null
-        technologies.value.forEach(el => { 
-            if (el === activeFilter.value) {
-                test = true
-            }
-        })
-        if (test) {
-            var filterActive = []
-            projets.value.data.forEach(p => {
-                p.technologies.forEach(t => {
-                    if (t.name === activeFilter.value) {
-                        filterActive.push(p)
-                    }
-                });
-            })
-            return filterActive
+    const filteredProjects = computed(() => {
+        if (activeFilter.value === "all") {
+            return projets.value.data
         } else {
-            var filterActive =  projets.value.data.filter( projet => projet.type === activeFilter.value )
-            return filterActive
-        }
-    }
-})
-
-const filterProjet = (filter) => {
-    activeFilter.value = filter
-}
-
-onMounted(async () => {
-    projets.value = await find('projets', {populate: 'deep'})
-    types.value = new Set(projets.value.data.map(projet => { return projet.type}))
-    
-    var projectTechnologies = []
-    projets.value.data.forEach(element => {
-        element.technologies.forEach(techno => {
-            var index = projectTechnologies.indexOf(techno.name)
-            if (index === -1) {
-                projectTechnologies.push(techno.name)
+            var test = null
+            technologies.value.forEach(el => { 
+                if (el === activeFilter.value) {
+                    test = true
+                }
+            })
+            if (test) {
+                var filterActive = []
+                projets.value.data.forEach(p => {
+                    p.technologies.forEach(t => {
+                        if (t.name === activeFilter.value) {
+                            filterActive.push(p)
+                        }
+                    });
+                })
+                return filterActive
+            } else {
+                var filterActive =  projets.value.data.filter( projet => projet.type === activeFilter.value )
+                return filterActive
             }
-        })
+        }
     })
-    technologies.value = new Set(projectTechnologies)
-})
+
+    const filterProjet = (filter) => {
+        activeFilter.value = filter
+    }
+
+    onMounted(async () => {
+        projets.value = await find('projets', {populate: 'deep'})
+        types.value = new Set(projets.value.data.map(projet => { return projet.type}))
+        
+        var projectTechnologies = []
+        projets.value.data.forEach(element => {
+            element.technologies.forEach(techno => {
+                var index = projectTechnologies.indexOf(techno.name)
+                if (index === -1) {
+                    projectTechnologies.push(techno.name)
+                }
+            })
+        })
+        technologies.value = new Set(projectTechnologies)
+    })
 </script>
   
 <style lang="scss" scoped>
